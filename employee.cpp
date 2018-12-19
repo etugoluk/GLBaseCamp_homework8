@@ -33,7 +33,9 @@ std::ostream& operator<<(std::ostream& os, const AbstractEmployee& e)
 	return os;
 }
 
-Employee::Employee(const std::string& fn, const std::string& ln, const std::string& j) : AbstractEmployee(fn, ln, j) {}
+Employee::Employee(const std::string& fn, const std::string& ln, const std::string& j)
+: AbstractEmployee(fn, ln, j)
+{}
 
 void Employee::showAll() const
 {
@@ -45,11 +47,16 @@ void Employee::setAll()
 	AbstractEmployee::setAll();
 }
 
-Manager::Manager(const std::string& fn, const std::string& ln,const std::string& j, int ico) : AbstractEmployee(fn, ln, j), in_charge_of_(ico) {}
+Manager::Manager(const std::string& fn, const std::string& ln,const std::string& j, int ico)
+: AbstractEmployee(fn, ln, j), in_charge_of_(ico)
+{}
 
-Manager::Manager(const AbstractEmployee& e, int ico) : AbstractEmployee(e), in_charge_of_(ico) {}
+Manager::Manager(const AbstractEmployee& e, int ico)
+: AbstractEmployee(e), in_charge_of_(ico)
+{}
 
-Manager::Manager(const Manager& m) : AbstractEmployee(m), in_charge_of_(m.in_charge_of_)
+Manager::Manager(const Manager& m)
+: AbstractEmployee(m), in_charge_of_(m.in_charge_of_)
 {}
 
 void Manager::showAll() const
@@ -65,11 +72,16 @@ void Manager::setAll()
 	std::cin >> in_charge_of_;
 }
 
-Fink::Fink(const std::string& fn, const std::string& ln, const std::string& j, const std::string& rpo) : AbstractEmployee(fn, ln, j), reports_to_(rpo) {}
+Fink::Fink(const std::string& fn, const std::string& ln, const std::string& j, const std::string& rpo)
+: AbstractEmployee(fn, ln, j), reports_to_(rpo)
+{}
 
-Fink::Fink(const AbstractEmployee& e, const std::string& rpo) : AbstractEmployee(e), reports_to_(rpo) {}
+Fink::Fink(const AbstractEmployee& e, const std::string& rpo)
+: AbstractEmployee(e), reports_to_(rpo)
+{}
 
-Fink::Fink(const Fink & e) : AbstractEmployee(e), reports_to_(e.reports_to_)
+Fink::Fink(const Fink & e)
+: AbstractEmployee(e), reports_to_(e.reports_to_)
 {}
 
 void Fink::showAll() const
@@ -107,13 +119,22 @@ HighFink::HighFink(const HighFink& h)
 
 void HighFink::showAll() const
 {
-	Manager::showAll();
-	Fink::showAll();
+	AbstractEmployee::showAll();
+	std::cout << "Number of employees manager is in charge of: " << inChargeOf() << std::endl;
+	std::cout << "Person, who he reports to: " << reportsTo() << std::endl;
 }
 
 void HighFink::setAll()
 {
-	Manager::setAll();
-	Fink::setAll();
+	int			inc;
+	std::string	rt;
+
+	AbstractEmployee::setAll();
+	std::cout << "Enter number of employees manager is in charge of: ";
+	std::cin >> inc; 
+	setInChargeOf(inc);
+	std::cout << "Enter person, who he reports to: ";
+	std::cin >> rt;
+	setReportsTo(rt);
 }
 
